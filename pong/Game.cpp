@@ -7,9 +7,10 @@
 // ----------------------------------------------------------------
 
 #include "Game.h"
+#include "stdio.h"
 
 const int thickness = 15;//sera usado para setar a altura de alguns objetos
-const float paddleH = 100.0f;//tamanho da raquete
+const float paddleH = 200.0f;//tamanho da raquete
 
 Game::Game()
 :mWindow(nullptr)//para criar uma janela
@@ -179,7 +180,14 @@ void Game::UpdateGame()
 		balls[0].velocity.x < 0.0f)
 
 	{
+		if (balls[0].velocity.x > 0) {
+			balls[0].velocity.x += 20;
+		}
+		else {
+			balls[0].velocity.x -= 20;
+		}
 		balls[0].velocity.x *= -1.0f;
+		//printf("%f\n", balls[0].velocity.x);
 	}
 
 	if (
@@ -190,7 +198,14 @@ void Game::UpdateGame()
 			balls[1].velocity.x < 0.0f)
 
 	{
+		if (balls[1].velocity.x > 0) {
+			balls[1].velocity.x += 20;
+		}
+		else {
+			balls[1].velocity.x -= 20;
+		}
 		balls[1].velocity.x *= -1.0f;
+		//printf("%f\n", balls[1].velocity.x);
 	}
 
 	//Verifica se a bola saiu da tela (no lado esquerdo, onde é permitido)
