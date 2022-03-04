@@ -62,10 +62,11 @@ bool Game::Initialize()
 	
 	mPaddlePos.x = 10.0f;//posição inicial da raquete eixo x
 	mPaddlePos.y = 768.0f/2.0f;//posição inicial da raquee eixo y
-	mBallPos.x = 1024.0f/2.0f;//posição da bola eixo x
-	mBallPos.y = 768.0f/2.0f;//posição da bola eixo y
-	mBallVel.x = -200.0f;//velocidade de movimentação da bola no eixo x
-	mBallVel.y = 500.0f;//velocidade de movimentação da bola no eixo y
+
+	balls[0].position.x = 1024.0f / 2.0f;
+	balls[0].position.y = 768.0f / 2.0f;
+	balls[0].velocity.x = -200.0f;
+	balls[0].velocity.y = 500.0f;
 
 	return true;
 }
@@ -107,11 +108,11 @@ void Game::ProcessInput()
 	mPaddleDir = 0;
 	if (state[SDL_SCANCODE_W])
 	{
-		mPaddleDir -= 1;
+		mPaddleDir -= 3;
 	}
 	if (state[SDL_SCANCODE_S])
 	{
-		mPaddleDir += 1;
+		mPaddleDir += 3;
 	}
 }
 
@@ -150,11 +151,11 @@ void Game::UpdateGame()
 	}
 	
 	// atualiza a posição da bola com base na sua velocidade
-	mBallPos.x += mBallVel.x * deltaTime;
-	mBallPos.y += mBallVel.y * deltaTime;
+	balls[0].position.x += balls[0].velocity.x * deltaTime;
+	balls[0].position.y += balls[0].velocity.y * deltaTime;
 	
 	// atualiza a posição da bola se ela colidiu com a raquete
-	float diff = mPaddlePos.y - mBallPos.y;
+	float diff = mPaddlePos.y - balls[0].position.y;
 	//pegue o valor absoluto de diferença entre o eixo y da bolinha e da raquete
 	//isso é necessário para os casos em que no próximo frame a bolinha ainda não esteja tão distante da raquete
 	//verifica se a bola está na area da raquete e na mesma posição no eixo x
@@ -163,41 +164,41 @@ void Game::UpdateGame()
 		// A diferença no eixo y y-difference is small enough
 		diff <= paddleH / 2.0f &&
 		// Estamos na posicao x correta
-		mBallPos.x <= 25.0f && mBallPos.x >= 20.0f &&
+		balls[0].position.x <= 25.0f && balls[0].position.x >= 20.0f &&
 		// A bolinha está se movendo para a esquerda
-		mBallVel.x < 0.0f)
+		balls[0].velocity.x < 0.0f)
 	{
-		mBallVel.x *= -1.0f;
+		balls[0].velocity.x *= -1.0f;
 	}
 
 	//Verifica se a bola saiu da tela (no lado esquerdo, onde é permitido)
 	//Se sim, encerra o jogo
 	// 
-	else if (mBallPos.x <= 0.0f)
+	else if (balls[0].position.x <= 0.0f)
 	{
 		mIsRunning = false;
 	}
 
 	// Atualize (negative) a velocidade da bola se ela colidir com a parede do lado direito
 	// 
-	else if (mBallPos.x >= (1024.0f - thickness) && mBallVel.x > 0.0f)
+	else if (balls[0].position.x >= (1024.0f - thickness) && balls[0].velocity.x > 0.0f)
 	{
-		mBallVel.x *= -1.0f;
+		balls[0].velocity.x *= -1.0f;
 	}
 	
 	// Atualize (negative) a posição da bola se ela colidir com a parede de cima
 	// 
-	if (mBallPos.y <= thickness && mBallVel.y < 0.0f)
+	if (balls[0].position.y <= thickness && balls[0].velocity.y < 0.0f)
 	{
-		mBallVel.y *= -1;
+		balls[0].velocity.y *= -1;
 	}
 
 	// Atualize (negative) a posição da bola se ela colidiu com a parede de baixo
 	// Did the ball collide with the bottom wall?
-	else if (mBallPos.y >= (768 - thickness) &&
-		mBallVel.y > 0.0f)
+	else if (balls[0].position.y >= (768 - thickness) &&
+		balls[0].velocity.y > 0.0f)
 	{
-		mBallVel.y *= -1;
+		balls[0].velocity.y *= -1;
 	}
 
 	
@@ -265,14 +266,14 @@ void Game::GenerateOutput()
 	SDL_RenderFillRect(mRenderer, &paddle);
 	
 
-	//desenhando a bola - usando mBallPos que é uma struc de coordenadas definida como membro em Game.h
+	//desenhando a bola - usando balls[0].position que é uma struc de coordenadas definida como membro em Game.h
 	
 	//mudar a cor do renderizador para a bola
 	SDL_SetRenderDrawColor(mRenderer, 255, 255, 0, 255);
 	// Draw ball
 	SDL_Rect ball{	
-		static_cast<int>(mBallPos.x - thickness/2),
-		static_cast<int>(mBallPos.y - thickness/2),
+		static_cast<int>(balls[0].position.x - thickness/2),
+		static_cast<int>(balls[0].position.y - thickness/2),
 		thickness,
 		thickness
 	};
