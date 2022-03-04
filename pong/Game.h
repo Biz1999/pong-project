@@ -52,5 +52,5 @@ private:
 
 	Ball ball1, ball2;
 
-	Ball balls[2] = { ball1 };
+	Ball balls[2] = { ball1, ball2 };
 };
