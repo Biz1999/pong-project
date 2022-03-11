@@ -8,6 +8,11 @@
 
 #pragma once
 #include "SDL/SDL.h"
+#include "Ball.h"
+#include "Score.h"
+#include <vector>
+
+using namespace std;
 
 // Vector2 struct just stores x/y coordinates
 // (for now)
@@ -33,6 +38,7 @@ private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
+	bool generateRandomBool();
 
 	// Window created by SDL
 	SDL_Window* mWindow;
@@ -48,8 +54,12 @@ private:
 	int mPaddleDir;
 	// Position of paddle
 	Vector2 mPaddlePos;
-	// Position of ball
-	Vector2 mBallPos;
-	// Velocity of ball
-	Vector2 mBallVel;
+
+	int scoreCount;
+
+	Ball ball;
+
+	vector<Ball> balls;
+
+	Score score;
 };
