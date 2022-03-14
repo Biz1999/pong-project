@@ -1,8 +1,8 @@
-#include "Score.h"
+#include "../include/Score.h"
 
 bool Score::Initialize(float digitPositionX, float digitPositionY)
 {
-	if(decimal.Initialize(0, digitPositionY) && numeral.Initialize(50, digitPositionY))
+	if(decimal.Initialize(0 + digitPositionX, digitPositionY) && numeral.Initialize(50 + digitPositionX, digitPositionY))
 		return true;
 
 	return false;
