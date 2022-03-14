@@ -11,14 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ball.cpp" />
-	<ClCompile Include="Score.cpp" />
-	<ClCompile Include="Digit.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="../src/Ball.cpp" />
+	<ClCompile Include="../src/Score.cpp" />
+	<ClCompile Include="../src/Digit.cpp" />
+    <ClCompile Include="../src/Game.cpp" />
+    <ClCompile Include="../src/Paddle.cpp" />
+    <ClCompile Include="../Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Paddle.h" />
     <ClInclude Include="Game.h" />
 	<ClInclude Include="Score.h" />
     <ClInclude Include="Digit.h" />

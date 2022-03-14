@@ -9,6 +9,7 @@
 #pragma once
 #include "SDL/SDL.h"
 #include "Ball.h"
+#include "Paddle.h"
 #include "Score.h"
 #include <vector>
 
@@ -37,8 +38,11 @@ private:
 	// Helper functions for the game loop
 	void ProcessInput();
 	void UpdateGame();
+	void updateSingleGame(float deltaTime);
+	void updateMultiplayerGame(float deltaTime);
 	void GenerateOutput();
 	bool generateRandomBool();
+	
 
 	// Window created by SDL
 	SDL_Window* mWindow;
@@ -51,15 +55,23 @@ private:
 	
 	// Pong specific
 	// Direction of paddle
-	int mPaddleDir;
+	int mPaddleDir1;
+	int mPaddleDir2;
 	// Position of paddle
-	Vector2 mPaddlePos;
+	Vector2 mPaddlePos1;
+	Vector2 mPaddlePos2;
 
 	int scoreCount;
+	int scoreCount2;
+	bool isMultiplayerActive;
 
 	Ball ball;
 
 	vector<Ball> balls;
 
-	Score score;
+	Paddle paddleFirstPlayer;
+	Paddle paddleSecondPlayer;
+
+	Score scoreFirstPlayer;
+	Score scoreSecondPlayer;
 };
